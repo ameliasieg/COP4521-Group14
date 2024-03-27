@@ -13,8 +13,8 @@ def get_random_book_by_genre(genre):
     return book
 
 @app.route('/')
-def start():
-    return render_template('start.html') # Changed this
+def home():
+    return render_template('home.html')
 
 @app.route('/role', methods=['POST'])
 def role():

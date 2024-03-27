@@ -14,7 +14,7 @@ def get_random_book_by_genre(genre):
 
 @app.route('/')
 def start():
-    return render_template('start.html')
+    return render_template('start.html') # Changed this
 
 @app.route('/role', methods=['POST'])
 def role():

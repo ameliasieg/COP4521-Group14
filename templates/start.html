@@ -4,12 +4,14 @@
     <title>Start Page</title>
 </head>
 <body>
-
+    <h1>Social Reads Start Page</h1>
     <h2>Choose Your Access Level</h2>
 
-    <h2><a href="/userAccess">User Access</a></h2>
-    <h2><a href="/moderatorAccess">Moderator Access</a></h2>
-    <h2><a href="/adminAccess">Admin Access</a></h2>
+    <form action="/role" method="post">
+        <button type="submit" name="role" value="user">User Access</button>
+        <button type="submit" name="role" value="moderator">Moderator Access</button>
+        <button type="submit" name="role" value="admin">Admin Access</button>
+    </form>
       
 </body>
 </html>

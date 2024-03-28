@@ -6,20 +6,15 @@
     <script>
         // Function to add a review to the page
         function addReview() {
-            // Prevent the form from submitting traditionally
             event.preventDefault();
-
-            // Get the review text from the textarea
+            // Get the review text
             var reviewText = document.getElementById('review-text').value;
-
-            // Create a new paragraph element for the review
+            // Create a new paragraph 
             var newReview = document.createElement('p');
             newReview.textContent = reviewText;
-
-            // Add the new review to the reviews container
+            // Add the new review 
             document.getElementById('reviews-container').appendChild(newReview);
-
-            // Clear the textarea for the next review
+            // Clear the text
             document.getElementById('review-text').value = '';
         }
     </script>

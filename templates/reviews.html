@@ -7,16 +7,16 @@
 <body>
     <h1>Reviews for Books in {{ genre | capitalize }}</h1>
 
-    <!-- Container for displaying reviews -->
+    <!-- Display the reviews -->
     <div id="reviews-container">
         <h2>Reviews</h2>
-        <!-- Loop through each review passed to the template and display it -->
+        <!-- Loop through each review passed and display it -->
         {% for review in reviews %}
             <p>{{ review[0] }}</p>
         {% endfor %}
     </div>
 
-    <!-- Form for submitting a new review. Note the action attribute points to the new route -->
+    <!-- submitting a new review -->
     <form action="/submit_review/{{ genre }}" method="post">
         <label for="review-text">Your Review:</label>
         <textarea id="review-text" name="review" required></textarea>

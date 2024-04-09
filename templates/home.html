@@ -28,10 +28,20 @@
             text-decoration: none;
             color: blue;
         }
+        /* Style for the home button */
+        .home-button {
+            display: block;
+            margin: 20px 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <h1>Welcome to Social Reads!</h1>
+    <!-- Home Button -->
+    <div class="home-button">
+        <a href="/">Home</a>
+    </div>
 
     {% if role == 'admin' %}
     <!-- Display Regenerate button only for Admin users -->

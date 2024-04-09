@@ -22,6 +22,8 @@ def start():
 def role():
     selected_role = request.form.get('role')
     if selected_role == 'admin':
+        return redirect(url_for('admin_page'))
+    if selected_role == 'user':
         genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
         books = {genre: get_random_books_by_genre(genre) for genre in genres}
         return render_template('home.html', books=books, role=selected_role)  # Pass role to home.html

@@ -1,11 +1,10 @@
-# app.py
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 app = Flask(__name__)
 
 # Function to get a random book from the database by genre
-def get_random_book_by_genre(genre):
+def get_random_books_by_genre(genre):
     conn = sqlite3.connect('socialReads.db')
     cur = conn.cursor()
     cur.execute("SELECT Title FROM Books WHERE Genre=? ORDER BY RANDOM() LIMIT 1", (genre,))
@@ -57,8 +56,6 @@ def submit_review(genre):
     conn.close()
     return redirect(url_for('reviews', genre=genre))
 
-
-
 # Function to display reviews for a specific genre
 @app.route('/reviews/<genre>')
 def reviews(genre):
@@ -68,7 +65,6 @@ def reviews(genre):
     reviews = cur.fetchall()
     conn.close()
     return render_template('reviews.html', genre=genre, reviews=reviews)
-
 
 @app.route('/admin')
 def admin_page():
@@ -84,7 +80,6 @@ def clear_reviews():
     conn.commit()
     conn.close()
     return redirect(url_for('admin_page'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)

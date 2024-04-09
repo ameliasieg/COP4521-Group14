@@ -5,7 +5,7 @@ import sqlite3
 app = Flask(__name__)
 
 # Function to get a random book from the database by genre
-def get_random_book_by_genre(genre):
+def get_random_books_by_genre(genre):
     conn = sqlite3.connect('socialReads.db')
     cur = conn.cursor()
     cur.execute("SELECT Title FROM Books WHERE Genre=? ORDER BY RANDOM() LIMIT 1", (genre,))

@@ -23,6 +23,7 @@ def start():
 # Function to display the front page
 @app.route('/role', methods=['POST', 'GET'])
 def role():
+
     if request.method == 'POST':
         selected_role = request.form.get('role')
         if selected_role == 'admin':

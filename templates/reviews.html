@@ -3,35 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Reviews</title>
-    <script>
-        // Function to add a review to the page
-        function addReview() {
-            event.preventDefault();
-            // Get the review text
-            var reviewText = document.getElementById('review-text').value;
-            // Create a new paragraph 
-            var newReview = document.createElement('p');
-            newReview.textContent = reviewText;
-            // Add the new review 
-            document.getElementById('reviews-container').appendChild(newReview);
-            // Clear the text
-            document.getElementById('review-text').value = '';
-        }
-    </script>
 </head>
 <body>
     <h1>Reviews for Books in {{ genre | capitalize }}</h1>
 
-    <!-- Container for displaying reviews -->
+    <!-- Display the reviews -->
     <div id="reviews-container">
         <h2>Reviews</h2>
-        <!-- Existing reviews will be displayed here -->
+        <!-- Loop through each review passed and display it -->
+        {% for review in reviews %}
+            <p>{{ review[0] }}</p>
+        {% endfor %}
     </div>
 
-    <!-- Form for submitting a new review -->
-    <form onsubmit="addReview()">
+    <!-- submitting a new review -->
+    <form action="/submit_review/{{ genre }}" method="post">
         <label for="review-text">Your Review:</label>
-        <textarea id="review-text" required></textarea>
+        <textarea id="review-text" name="review" required></textarea>
         <button type="submit">Submit Review</button>
     </form>
 

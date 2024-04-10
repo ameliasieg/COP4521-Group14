@@ -21,18 +21,16 @@ def start():
     return render_template('start.html')
 
 # Function to display the front page
-@app.route('/role', methods=['POST', 'GET'])
+@app.route('/role', methods=['POST'])
 def role():
+    selected_role = request.form.get('role')
+    if selected_role == 'admin':
+        return redirect(url_for('admin_page'))
+    if selected_role == 'user':
+        return redirect(url_for('home'))  # Pass role to home.html
+    if selected_role == 'moderator':
+        return redirect(url_for('home'))
 
-    if request.method == 'POST':
-        selected_role = request.form.get('role')
-        if selected_role == 'admin':
-            # genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
-            # global stored_books
-            # stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
-            return render_template('home.html', books=stored_books, role=selected_role)  # Pass role to home.html
-        else:
-            return redirect(url_for('home'))
 
 @app.route('/home')
 def home():

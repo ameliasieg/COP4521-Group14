@@ -16,7 +16,14 @@
             background-color: #f9f9f9; 
         }
 
-        
+        .delete-button {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            float: right;
+        }
 
         form {
             margin-top: 20px;
@@ -37,8 +44,7 @@
         button:hover {
             background-color: black;
         }
-        </style>
-
+    </style>
 </head>
 <body>
     <h1>Reviews for Books in {{ genre | capitalize }}</h1>
@@ -50,6 +56,12 @@
         {% for review in reviews %}
         <div class="review-box">
             <p>{{ review[0] }}</p>
+                <form action="{{ url_for('delete_review', genre=genre) }}" method="post">
+                    <input type="hidden" name="review_text" value="{{ review[0] }}">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
+            <!-- {% if role == 'moderator' %} -->
+            <!-- {% endif %} -->
         </div>
         {% endfor %}
     </div>

@@ -32,21 +32,21 @@ def role():
     if selected_role == 'admin':
         return redirect(url_for('admin_page'))
     if selected_role == 'user':
-        return redirect(url_for('home'))  # Pass role to home.html
+        return redirect(url_for('home', role='user'))  # Pass role to home.html
     if selected_role == 'moderator':
-        return redirect(url_for('home'))
+        return redirect(url_for('home', role='moderator'))
 
 
 @app.route('/home')
 def home():
     role = request.args.get('role', 'user')  # Get the role from the query parameters
+    print(role)
     global stored_books
     if not stored_books:  # If stored_books is empty, generate new books
         genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
         stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
     return render_template('home.html', books=stored_books, role=role)
 
-@app.route('/regenerate', methods=['POST'])
 @app.route('/regenerate', methods=['POST'])
 def regenerate_books():
     selected_role = request.form.get('role')
@@ -74,17 +74,19 @@ def submit_review(genre):
         cur.execute("INSERT INTO Reviews (genre, review) VALUES (?, ?)", (genre, review_text))
         conn.commit()
         conn.close()
-        return redirect(url_for('reviews', genre=genre))
+        # role = request.args.get('role')
+        return redirect(url_for('reviews', genre=genre, role=role))
 
 # Function to display reviews for a specific genre
 @app.route('/reviews/<genre>')
 def reviews(genre):
-    role = request.args.get('role', 'user')  # Get the role from the query parameters
+    role = request.args.get('role')  # Get the role from the query parameters
     conn = sqlite3.connect('socialReads.db')
     cur = conn.cursor()
     cur.execute("SELECT review FROM Reviews WHERE genre=?", (genre,))
     reviews = cur.fetchall()
     conn.close()
+    print(role)
     return render_template('reviews.html', genre=genre, reviews=reviews, role=role)
 
 @app.route('/admin')

@@ -37,7 +37,7 @@ def home():
     role = request.args.get('role', 'user')  # Get the role from the query parameters
     global stored_books
     if not stored_books:  # If stored_books is empty, generate new books
-        genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
+        genres = ['Fantasy', 'Non-Fiction', 'Thriller-Mystery', 'Romance']  
         stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
     return render_template('home.html', books=stored_books, role=role)
 
@@ -46,7 +46,7 @@ def regenerate_books():
     if request.method == 'POST':
         role = request.form.get('role')
         if role == 'admin':
-            genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
+            genres = ['Fantasy', 'Non-Fiction', 'Thriller-Mystery', 'Romance']  
             global stored_books
             stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
             return render_template('home.html', books=stored_books, role=role)

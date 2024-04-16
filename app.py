@@ -1,8 +1,8 @@
 # app.py
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import sqlite3
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='static')
 
 # Function to get a random book from the database by genre
 def get_random_books_by_genre(genre):
@@ -24,7 +24,7 @@ def role():
     if selected_role == 'admin':
         return redirect(url_for('admin_page'))
     if selected_role == 'user':
-        genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
+        genres = ['Fantasy', 'Non-Fiction', 'Mystery', 'Romance']  
         books = {genre: get_random_books_by_genre(genre) for genre in genres}
         return render_template('home.html', books=books, role=selected_role)  # Pass role to home.html
     else:
@@ -42,8 +42,14 @@ def regenerate_books():
     if request.method == 'POST':
         role = request.form.get('role')
         if role == 'admin':
+            conn = sqlite3.connect('socialReads.db')
+            cur = conn.cursor()
+            cur.execute("DELETE FROM Reviews")
+            conn.commit()
             genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
             books = {genre: get_random_books_by_genre(genre) for genre in genres}
+            conn.close()
+            
             return render_template('home.html', books=books, role=role)
     return redirect(url_for('home'))
 
@@ -51,7 +57,6 @@ def regenerate_books():
 @app.route('/submit_review/<genre>', methods=['POST'])
 def submit_review(genre):
     review_text = request.form['review']
-    # Save the review to the database
     conn = sqlite3.connect('socialReads.db')
     cur = conn.cursor()
     cur.execute("INSERT INTO Reviews (genre, review) VALUES (?, ?)", (genre, review_text))
@@ -87,6 +92,9 @@ def clear_reviews():
     conn.close()
     return redirect(url_for('admin_page'))
 
+@app.route('/images/<filename>')
+def send_image(filename):
+    return send_from_directory("static/images", filename)
 
 if __name__ == '__main__':
     app.run(debug=True)

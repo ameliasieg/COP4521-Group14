@@ -2,66 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Book Reviews</title>
+    <title>Book Reviews for {{ genre | capitalize }}</title>
     <style>
-        #reviews-container {
-            margin-top: 20px;
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+       
+        h1, h2 {
+            color: #333;
+        }
+
+        .review-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .review-header h1 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .review-form {
+            margin-bottom: 2em;
+            text-align: center;
+        }
+
+        .review-form label,
+        .review-form textarea,
+        .review-form button {
+            font-size: 1em;
+            margin-bottom: 0.5em;
+        }
+
+        .review-form textarea {
+            width: 100%;
+            height: 100px;
+            padding: 0.5em;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 1em;
+        }
+
+        .review-form button {
+            padding: 10px 15px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .review-form button:hover {
+            background-color: black;
+        }
+
+        .reviews-container {
+            background-color: white;
+
         }
 
         .review-box {
-            border: 1px solid #ddd; 
-            margin-bottom: 10px; 
-            padding: 10px; 
-            border-radius: 5px; 
-            background-color: #f9f9f9; 
+            border-bottom: 1px solid #eee;
+            padding: 15px;
+            text-align: left;
         }
 
-        
+        .review-box:last-child {
+            border-bottom: none;
+        }
 
-        form {
+        .back-to-home {
+            display: inline-block;
             margin-top: 20px;
+            text-decoration: none;
+            font-size: 1em;
         }
-        textarea {
-            width: 100%;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-        button {
-            background-color: black;
-            color: white;
-            padding: 10px 20px;
-            margin: 10px 0;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: black;
-        }
-        </style>
-
+    </style>
 </head>
 <body>
-    <h1>Reviews for Books in {{ genre | capitalize }}</h1>
-
-    <!-- Display the reviews -->
-    <div id="reviews-container">
-        <h2>Reviews</h2>
-        <!-- Loop through each review passed and display it -->
+    <div class="review-header">
+        <h1>Reviews for Books in {{ genre | capitalize }}</h1>
+    </div>
+    <div class="reviews-container">
         {% for review in reviews %}
         <div class="review-box">
             <p>{{ review[0] }}</p>
         </div>
         {% endfor %}
     </div>
+    <div class="review-form">
+        <h2>Submit a Review</h2>
+        <form action="{{ url_for('submit_review', genre=genre) }}" method="post">
+            <textarea id="review" name="review" required></textarea>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
 
-    <!-- submitting a new review -->
-    <form action="/submit_review/{{ genre }}" method="post">
-        <label for="review-text">Your Review:</label>
-        <textarea id="review-text" name="review" required></textarea>
-
-        <button type="submit">Submit Review</button>
-    </form>
-
-    <a href="/">Back to Home</a>
+    <a class="back-to-home" href="/">Back to Home</a>
 </body>
 </html>

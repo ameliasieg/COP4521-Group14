@@ -90,7 +90,10 @@ def reviews(genre):
     reviews = cur.fetchall()
     #calculating average
     if reviews is not None:
-        average_rating = sum (review[1] for review in reviews if not None) / len(reviews)
+        if len(reviews) == 0:
+            average_rating = 0
+        else:
+            average_rating = sum (review[1] for review in reviews if not None) / len(reviews)
     else:
         average_rating = 0
     conn.close()

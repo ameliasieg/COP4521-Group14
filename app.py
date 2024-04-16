@@ -45,14 +45,14 @@ def home():
     print(role)
     global stored_books
     if not stored_books:  # If stored_books is empty, generate new books
-        genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
+        genres = ['Fantasy', 'Non-Fiction', 'Thriller-Mystery', 'Romance']  
         stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
     return render_template('home.html', books=stored_books, role=role)
 
 @app.route('/regenerate', methods=['POST'])
 def regenerate_books():
     selected_role = request.form.get('role')
-    genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']
+    genres = ['Fantasy', 'Non-Fiction', 'Thriller-Mystery', 'Romance']
     # Delete all reviews
     conn = sqlite3.connect('socialReads.db')
     cur = conn.cursor()

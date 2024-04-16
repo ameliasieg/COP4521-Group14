@@ -16,11 +16,13 @@
             color: #333;
         }
 
-        .review-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
+        .delete-button {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            float: right;
         .review-header h1 {
             font-size: 2em;
             margin-bottom: 0.5em;
@@ -91,6 +93,12 @@
         {% for review in reviews %}
         <div class="review-box">
             <p>{{ review[0] }}</p>
+            {% if role == 'moderator' %} <!-- Only show delete button for Moderators -->
+                <form action="{{ url_for('delete_review', genre=genre) }}" method="post">
+                    <input type="hidden" name="review_text" value="{{ review[0] }}">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

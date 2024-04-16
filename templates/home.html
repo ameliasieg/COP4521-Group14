@@ -96,7 +96,7 @@
             <ul class="book-list">
                 <li>{{ book }}</li>
             </ul>
-            <p><a href="/reviews/{{ genre|lower }}">{{ genre }} Reviews Page</a></p>
+            <p><a href="/reviews/{{ genre|lower }}?role={{ role }}">{{ genre }} Reviews Page</a></p>
         </li>
         {% endfor %}
     </ul>

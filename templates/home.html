@@ -6,28 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Social Reads!</title>
     <style>
-        /* Style for genre list */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center; 
+            margin: 0;
+            padding: 0;
+            background-image: url("{{ url_for('static', filename='images/background.img') }}");
+            background-size: cover;
+            background-position: center;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #333;
+        }
+        h1, h2  {
+            font-size: 4em;
+            color: black; 
+            padding-top: 50px; 
+            margin-bottom: 0; 
+        }
+        h2 {
+            font-size: 1.5em;
+            color: #333;
+        }
         .genre-list {
             list-style-type: none;
             padding: 0;
             margin: 20px 0;
             display: flex;
-            justify-content: space-around;
+            flex-wrap: wrap; 
+            justify-content: center; 
         }
-        /* Style for each genre */
+
         .genre {
             text-align: center;
+            margin: 10px;
+            width: 150px; 
+            height: 250px; 
+            background-color: #ccc; 
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            border-radius: 5px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        /* Style for the list of books */
-        .book-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        /* Style for links */
+ 
         a {
             text-decoration: none;
             color: blue;
         }
+      
+        .book-list {
+            list-style-type: none;
+            padding: 0;
+
         /* Style for the home button */
         .home-button {
             display: block;
@@ -37,7 +69,7 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to Social Reads!</h1>
+    <h1>The World of Books</h1>
     <!-- Home Button -->
     <div class="home-button">
         <a href="/">Home</a>
@@ -47,7 +79,7 @@
     <!-- Display Regenerate button only for Admin users -->
     <form action="/regenerate" method="post">
         <button type="submit">Regenerate</button>
-        <input type="hidden" name="role" value="admin"> <!-- Include hidden input for role -->
+        <input type="hidden" name="role" value="admin">
     </form>
     {% endif %}
 
@@ -58,7 +90,7 @@
             <ul class="book-list">
                 <li>{{ book }}</li>
             </ul>
-            <p><a href="/reviews/{{ genre }}">{{ genre }} Reviews Page</a></p>
+            <p><a href="/reviews/{{ genre|lower }}?role={{ role }}">{{ genre }} Reviews Page</a></p>
         </li>
         {% endfor %}
     </ul>

@@ -94,6 +94,7 @@
         {% for review in reviews %}
         <div class="review-box">
             <p>{{ review[0] }}</p>
+            <p>{{ review[1] }}</p>
             {% if role == 'moderator' %} <!-- Only show delete button for Moderators -->
                 <form action="{{ url_for('delete_review', genre=genre) }}" method="post">
                     <input type="hidden" name="review_text" value="{{ review[0] }}">
@@ -102,6 +103,9 @@
             {% endif %}
         </div>
         {% endfor %}
+        <div class = "average_rating">
+            <p>{{ average_rating }}</p>
+        </div>
     </div>
     <div class="review-form">
         <h2>Submit a Review</h2>
@@ -111,6 +115,22 @@
         </form>
     </div>
 
+    <!-- submitting a new review -->
+    <form action="/submit_review/{{ genre }}" method="post">
+        <label for="review-text">Your Review:</label>
+        <textarea id="review-text" name="review" required></textarea>
+
+        <label for="review-rating">Your Rating:</label>
+        <select id="review-rating" name="rating" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <button type="submit">Submit Review</button>
+    </form>
     <a class="back-to-home" href="/">Back to Home</a>
 </body>
 </html>

@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+# app.py
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import sqlite3
 import random
 
+app = Flask(__name__,static_folder='static')
 app = Flask(__name__)
 
 # Global variable to store generated books
@@ -46,6 +48,10 @@ def regenerate_books():
     if request.method == 'POST':
         role = request.form.get('role')
         if role == 'admin':
+            conn = sqlite3.connect('socialReads.db')
+            cur = conn.cursor()
+            cur.execute("DELETE FROM Reviews")
+            conn.commit()
             genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
             global stored_books
             stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
@@ -90,6 +96,10 @@ def clear_reviews():
         conn.commit()
         conn.close()
         return redirect(url_for('admin_page'))
+
+@app.route('/images/<filename>')
+def send_image(filename):
+    return send_from_directory("static/images", filename)
 
 if __name__ == '__main__':
     app.run(debug=True)

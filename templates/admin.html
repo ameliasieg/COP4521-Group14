@@ -2,9 +2,34 @@
 <html>
 <head>
     <title>Admin Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; 
+        }
+        h1 {
+            font-size: 3em;
+            margin-top: 50px;
+        }
+        .button-container {
+            margin-top: 50px;
+        }
+        button {
+            display: block;
+            margin: 20px auto; 
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>Admin Dashboard</h1>
+    <h1>Administrator Access</h1>
+    
+    <div class="button-container">
     <form action="/clear_reviews" method="post">
         <button type="submit">Clear All Reviews</button>
     </form>
@@ -16,5 +41,6 @@
 
 
     <a href="/">Back to Start</a>
+</div>
 </body>
 </html>

@@ -57,10 +57,11 @@ def regenerate_books():
 def submit_review(genre):
     if request.method == 'POST':
         review_text = request.form['review']
+        review_rating = request.form['rating']
         # Save the review to the database
         conn = sqlite3.connect('socialReads.db')
         cur = conn.cursor()
-        cur.execute("INSERT INTO Reviews (genre, review) VALUES (?, ?)", (genre, review_text))
+        cur.execute("INSERT INTO Reviews (genre, review, rating) VALUES (?, ?, ?)", (genre, review_text, int(review_rating)))
         conn.commit()
         conn.close()
         return redirect(url_for('reviews', genre=genre))
@@ -70,10 +71,15 @@ def submit_review(genre):
 def reviews(genre):
     conn = sqlite3.connect('socialReads.db')
     cur = conn.cursor()
-    cur.execute("SELECT review FROM Reviews WHERE genre=?", (genre,))
+    cur.execute("SELECT review, rating FROM Reviews WHERE genre=?", (genre,))
     reviews = cur.fetchall()
+    #calculating average
+    if reviews is not None:
+        average_rating = sum (review[1] for review in reviews if not None) / len(reviews)
+    else:
+        average_rating = 0
     conn.close()
-    return render_template('reviews.html', genre=genre, reviews=reviews)
+    return render_template('reviews.html', genre=genre, reviews=reviews, average_rating=average_rating)
 
 @app.route('/admin')
 def admin_page():

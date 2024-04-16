@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+# app.py
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import sqlite3
 import random
 
+app = Flask(__name__,static_folder='static')
 app = Flask(__name__)
 
 # Global variable to store generated books
@@ -120,6 +122,10 @@ def delete_review(genre):
         conn.commit()
         conn.close()
         return redirect(url_for('reviews', genre=genre))
+
+@app.route('/images/<filename>')
+def send_image(filename):
+    return send_from_directory("static/images", filename)
 
 if __name__ == '__main__':
     app.run(debug=True)

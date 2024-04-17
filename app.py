@@ -97,7 +97,7 @@ def reviews(genre):
     else:
         average_rating = 0
     conn.close()
-    return render_template('reviews.html', genre=genre, reviews=reviews, average_rating=average_rating)
+    return render_template('reviews.html', genre=genre, reviews=reviews, average_rating=average_rating, role=role)
 
 @app.route('/admin')
 def admin_page():

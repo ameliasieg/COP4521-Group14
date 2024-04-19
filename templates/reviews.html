@@ -65,7 +65,9 @@
 
         .reviews-container {
             background-color: white;
-
+            display: grid;
+            grid-template-columns: 70% 30%;
+            gap: 10px;
         }
 
         .review-box {
@@ -78,11 +80,35 @@
             border-bottom: none;
         }
 
+        .review-text {
+            margin-bottom: 0.5em;
+        }
+
+        .review-rating {
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+
+        .column-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+
+        .column-separator {
+            border-right: 1px solid #ddd;
+            padding-right: 10px;
+        }
+
         .back-to-home {
             display: inline-block;
             margin-top: 20px;
             text-decoration: none;
             font-size: 1em;
+        }
+
+        .average-rating {
+            margin-top: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -91,20 +117,30 @@
         <h1>Reviews for Books in {{ genre | capitalize }}</h1>
     </div>
     <div class="reviews-container">
-        {% for review in reviews %}
-        <div class="review-box">
-            <p>{{ review[0] }}</p>
-            <p>{{ review[1] }}</p>
-            {% if role == 'moderator' %} <!-- Only show delete button for Moderators -->
-                <form action="{{ url_for('delete_review', genre=genre) }}" method="post">
-                    <input type="hidden" name="review_text" value="{{ review[0] }}">
-                    <button type="submit" class="delete-button">Delete</button>
-                </form>
-            {% endif %}
+        <div class="column-separator">
+            <div class="column-title">Review</div>
+            {% for review in reviews %}
+            <div class="review-box">
+                <p class="review-text">{{ review[0] }}</p>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-        <div class = "average_rating">
-            <p>{{ average_rating }}</p>
+        <div>
+            <div class="column-title">Rating</div>
+            {% for review in reviews %}
+            <div class="review-box">
+                <p class="review-rating">{{ review[1] }}</p>
+                {% if role == 'moderator' %} <!-- Only show delete button for Moderators -->
+                    <form action="{{ url_for('delete_review', genre=genre) }}" method="post">
+                        <input type="hidden" name="review_text" value="{{ review[0] }}">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="average-rating">
+                <p>Average Rating: {{ average_rating }}</p>
+            </div>
         </div>
     </div>
     

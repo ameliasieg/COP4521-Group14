@@ -51,7 +51,7 @@ def home():
     if not stored_books:  # If stored_books is empty, generate new books
         genres = ['Fantasy', 'Non-Fiction', 'Thriller-Mystery', 'Romance']  
         stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
-    joke = pyjokes.get_joke()
+        joke = pyjokes.get_joke()
     return render_template('home.html', books=stored_books, role=role, joke=joke)
 
 @app.route('/regenerate', methods=['POST'])
@@ -70,7 +70,7 @@ def regenerate_books():
     stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
     print(stored_books)
     joke = pyjokes.get_joke()
-    return render_template('home.html', books=stored_books, role=selected_role, joke=joke)
+    return render_template('admin.html', books=stored_books, role=selected_role, joke=joke)
 
 # Function to display the form for submitting a review
 @app.route('/submit_review/<genre>', methods=['POST', 'GET'])
@@ -111,10 +111,10 @@ def admin_page():
     global stored_books
     global joke
     if not stored_books:  # If stored_books is empty, generate new books
-        genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
+        genres = ['Fantasy', 'Non-Fiction', 'Thriller-Mystery', 'Romance']  
         stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
     joke = pyjokes.get_joke()
-    return render_template('admin.html', joke=joke)
+    return render_template('admin.html', joke=joke, books=stored_books)
     
 # Function for admin to clear the reviews table
 @app.route('/clear_reviews', methods=['POST', 'GET'])

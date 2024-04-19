@@ -138,7 +138,8 @@ def delete_review(genre):
         cur.execute("DELETE FROM Reviews WHERE genre=? AND review=?", (genre, review_text))
         conn.commit()
         conn.close()
-        return redirect(url_for('reviews', genre=genre))
+        role = request.args.get('role')
+        return redirect(url_for('reviews', genre=genre, role=role))
 
 @app.route('/images/<filename>')
 def send_image(filename):

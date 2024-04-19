@@ -131,7 +131,7 @@
             <div class="review-box">
                 <p class="review-rating">{{ review[1] }}</p>
                 {% if role == 'moderator' %} <!-- Only show delete button for Moderators -->
-                    <form action="{{ url_for('delete_review', genre=genre) }}" method="post">
+                    <form action="{{ url_for('delete_review', genre=genre, role=role) }}" method="post">
                         <input type="hidden" name="review_text" value="{{ review[0] }}">
                         <button type="submit" class="delete-button">Delete</button>
                     </form>

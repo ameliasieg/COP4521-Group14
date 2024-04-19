@@ -2,12 +2,14 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import sqlite3
 import random
+import pyjokes
 
 app = Flask(__name__,static_folder='static')
 app = Flask(__name__)
 
 # Global variable to store generated books
 stored_books = {}
+joke = ""
 
 # Function to get a random book from the database by genre
 def get_random_books_by_genre(genre):
@@ -45,10 +47,12 @@ def home():
     role = request.args.get('role', 'user')  # Get the role from the query parameters
     print(role)
     global stored_books
+    global joke
     if not stored_books:  # If stored_books is empty, generate new books
         genres = ['Fantasy', 'Non-Fiction', 'Thriller-Mystery', 'Romance']  
         stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
-    return render_template('home.html', books=stored_books, role=role)
+    joke = pyjokes.get_joke()
+    return render_template('home.html', books=stored_books, role=role, joke=joke)
 
 @app.route('/regenerate', methods=['POST'])
 def regenerate_books():
@@ -62,9 +66,11 @@ def regenerate_books():
     conn.close()
     # Generate new books
     global stored_books
+    global joke
     stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
     print(stored_books)
-    return render_template('home.html', books=stored_books, role=selected_role)
+    joke = pyjokes.get_joke()
+    return render_template('home.html', books=stored_books, role=selected_role, joke=joke)
 
 # Function to display the form for submitting a review
 @app.route('/submit_review/<genre>', methods=['POST', 'GET'])
@@ -103,10 +109,12 @@ def reviews(genre):
 @app.route('/admin')
 def admin_page():
     global stored_books
+    global joke
     if not stored_books:  # If stored_books is empty, generate new books
         genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']  
         stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
-    return render_template('admin.html')
+    joke = pyjokes.get_joke()
+    return render_template('admin.html', joke=joke)
     
 # Function for admin to clear the reviews table
 @app.route('/clear_reviews', methods=['POST', 'GET'])
@@ -135,6 +143,7 @@ def delete_review(genre):
 @app.route('/images/<filename>')
 def send_image(filename):
     return send_from_directory("static/images", filename)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

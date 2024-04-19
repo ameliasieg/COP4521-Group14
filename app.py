@@ -84,7 +84,7 @@ def submit_review(genre):
         cur.execute("INSERT INTO Reviews (genre, review, rating) VALUES (?, ?, ?)", (genre, review_text, int(review_rating)))
         conn.commit()
         conn.close()
-        # role = request.args.get('role')
+        role = request.args.get('role')
         return redirect(url_for('reviews', genre=genre, role=role))
 
 # Function to display reviews for a specific genre

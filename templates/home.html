@@ -16,17 +16,34 @@
             background-position: center;
             background-position: center;
             background-repeat: no-repeat;
-            color: #333;
+            color: #000000;
         }
-        h1, h2  {
-            font-size: 4em;
+        h1  {
+            font-size: 3em;
             color: black; 
-            padding-top: 50px; 
+            padding-top: 10px; 
             margin-bottom: 0; 
         }
         h2 {
-            font-size: 1.5em;
-            color: #333;
+            padding-top: 0px;
+            font-size: 2.25em;
+            color: #000000;
+        }
+        h3 {
+            font-size: 1em;
+            color: rgb(37, 131, 75); 
+            padding-top: 0px; 
+            margin-bottom: 0; 
+            text-wrap: wrap;
+        }
+        h4 {
+            font-size: 1.18em;
+            color: #000000;
+        }
+        h5 {
+            padding-top: 0px;
+            font-size: 1.0em;
+            color: #000000;
         }
         h3 {
             font-size: 1em;
@@ -47,10 +64,10 @@
         .genre {
             text-align: center;
             margin: 10px;
-            width: 150px; 
-            height: 250px; 
+            width: 200px; 
+            height: 300px; 
             background-color: #ccc; 
-            padding: 10px;
+            padding: 50px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
             border-radius: 5px; 
             display: flex;
@@ -59,6 +76,7 @@
         }
  
         a {
+            font-size: 0.92em;
             text-decoration: none;
             color: blue;
         }
@@ -70,20 +88,33 @@
 
         /* Style for the home button */
         .home-button {
-            display: block;
-            margin: 20px 0;
+            display: inline-block;
+            margin: 15px 0;
             text-align: center;
+            padding: 3px 10px;
+            border-radius: 20px; /* Adjust the value to control the roundness */
+            background-color: #ffffff;
+            color: white;
+            text-decoration: none; /* Remove underline for links */
+            border: 1.35px solid rgb(37, 131, 75); 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for a raised effect */
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition for smoother hover effect */
         }
+
+        .home-button:hover {
+            background-color: #c0c0c0; /* Change color on hover */
+            border-color: #555;
+        }
+
     </style>
 </head>
 <body>
     <h1>The World of Books</h1>
     <!-- Home Button -->
     <div class="home-button">
-        <a href="/">Home</a>
+        <a href="/">Back to Home</a>
     </div>
     <h3>Joke of the Week: {{joke}}</h3>
-    
 
     {% if role == 'admin' %}
     <!-- Display Regenerate button only for Admin users -->
@@ -99,7 +130,10 @@
             <h2>{{ genre }}</h2>
             <ul class="book-list">
                 {% for book in books_info %}
-                <li>{{ book.Title }} - {{ book.ISBN }} - {{ book.AuthorFirst }} {{ book.AuthorLast }}</li>
+                    <!-- <h4>{{ book.Title }}</h4> -->
+                    <p><strong>Title:</strong> {{ book.Title }}</p>
+                    <p><strong>ISBN:</strong> {{ book.ISBN }}</p>
+                    <p><strong>Author:</strong> {{ book.AuthorFirst }} {{ book.AuthorLast }}</p>
                 {% endfor %}
             </ul>
             <p><a href="/reviews/{{ genre|lower }}?role={{ role }}">{{ genre }} Reviews Page</a></p>

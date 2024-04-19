@@ -14,33 +14,139 @@
             font-size: 3em;
             margin-top: 50px;
         }
-        .button-container {
+        h2 {
+            padding-top: 0px;
+            margin: 0;
+            font-size: 2.25em;
+            color: #000000;
+        }
+        h4 {
+            font-size: 1.18em;
+            color: #000000;
+        }
+        
+        /* .button-container {
             margin-top: 50px;
         }
+
         button {
             display: block;
             margin: 20px auto; 
             padding: 10px 20px;
             font-size: 1.2em;
             cursor: pointer;
+        } */
+
+        .genre-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center; 
         }
+
+        .genre {
+            text-align: center;
+            margin: 10px;
+            width: 200px; 
+            height: 300px; 
+            background-color: #ccc; 
+            padding: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            border-radius: 5px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .book-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        a {
+            font-size: 0.92em;
+            text-decoration: none;
+            color: blue;
+        }
+
+        /* Style for the start button */
+        .start-button {
+            display: inline-block;
+            margin: 15px 0;
+            text-align: center;
+            padding: 3px 10px;
+            border-radius: 20px; /* Adjust the value to control the roundness */
+            background-color: #ffffff;
+            color: white;
+            text-decoration: none; /* Remove underline for links */
+            border: 1.35px solid rgb(37, 131, 75); 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for a raised effect */
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition for smoother hover effect */
+        }
+
+        .start-button:hover {
+            background-color: #c0c0c0; /* Change color on hover */
+            border-color: #555;
+        }
+
+        .start-button button {
+            display: block;
+            width: 100%;
+            border: none;
+            background: none;
+            padding: 0px 10px;
+            font-size: 1em;
+            cursor: pointer;
+            outline: none; /* Remove outline on focus */
+        }
+
     </style>
 </head>
 <body>
     <h1>Administrator Access</h1>
+
+    <div class="start-button">
+        <a href="/">Back to Start</a>
+    </div>
     
-    <div class="button-container">
+    <div class="start-button">
+        <form action="/clear_reviews" method="post">
+            <button type="submit">Clear All Reviews</button>
+        </form>
+    </div>
+
+    <div class="start-button">
+        <form action="/regenerate" method="post">
+            <button type="submit">Regenerate Books</button>
+        </form>
+    </div>
+
+    <!-- <div class="button-container">
     <form action="/clear_reviews" method="post">
         <button type="submit">Clear All Reviews</button>
-    </form>
+    </form> -->
 
+    <!-- <form action="/regenerate" method="post">
+        <button type="submit">Regenerate Books</button>
+    </form> -->
 
-    <form action="/regenerate" method="post">
-        <button type="submit">Regenerate</button>
-    </form>
-
-
-    <a href="/">Back to Start</a>
+    <ul class="genre-list">
+        {% for genre, books_info in books.items() %}
+        <li class="genre">
+            <h2>{{ genre }}</h2>
+            <ul class="book-list">
+                {% for book in books_info %}
+                    <p><strong>Title:</strong> {{ book.Title }}</p>
+                    <p><strong>ISBN:</strong> {{ book.ISBN }}</p>
+                    <p><strong>Author:</strong> {{ book.AuthorFirst }} {{ book.AuthorLast }}</p>
+                {% endfor %}
+            </ul>
+            <p><a href="/reviews/{{ genre|lower }}?role={{ role }}">{{ genre }} Reviews Page</a></p>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 </body>
 </html>

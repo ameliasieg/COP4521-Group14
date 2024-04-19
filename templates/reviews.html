@@ -107,14 +107,7 @@
             <p>{{ average_rating }}</p>
         </div>
     </div>
-    <div class="review-form">
-        <h2>Submit a Review</h2>
-        <form action="{{ url_for('submit_review', genre=genre) }}" method="post">
-            <textarea id="review" name="review" required></textarea>
-            <button type="submit">Submit Review</button>
-        </form>
-    </div>
-
+    
     <!-- submitting a new review -->
     <form action="/submit_review/{{ genre }}" method="post">
         <label for="review-text">Your Review:</label>

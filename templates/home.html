@@ -85,11 +85,13 @@
     {% endif %}
 
     <ul class="genre-list">
-        {% for genre, book in books.items() %}
+        {% for genre, books_info in books.items() %}
         <li class="genre">
             <h2>{{ genre }}</h2>
             <ul class="book-list">
-                <li>{{ book }}</li>
+                {% for book in books_info %}
+                <li>{{ book.Title }} - {{ book.ISBN }} - {{ book.AuthorFirst }} {{ book.AuthorLast }}</li>
+                {% endfor %}
             </ul>
             <p><a href="/reviews/{{ genre|lower }}?role={{ role }}">{{ genre }} Reviews Page</a></p>
         </li>

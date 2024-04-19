@@ -14,10 +14,11 @@ def get_random_books_by_genre(genre):
     try:
         conn = sqlite3.connect('socialReads.db')
         cur = conn.cursor()
-        cur.execute("SELECT Title FROM Books WHERE Genre=? ORDER BY RANDOM() LIMIT 1", (genre,))
-        book = cur.fetchone()
+        cur.execute("SELECT Title, ISBN, AuthorFirst, AuthorLast FROM Books WHERE Genre=? ORDER BY RANDOM() LIMIT 1", (genre,))
+        books = cur.fetchall()
         conn.close()
-        return book[0] if book is not None else None
+        return [{'Title': book[0], 'ISBN': book[1], 'AuthorFirst': book[2], 'AuthorLast': book[3]} for book in books]
+        # return book[0] if book is not None else None
     except Exception as e:
         print("Error fetching random book:", e)
         return None

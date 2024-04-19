@@ -28,6 +28,13 @@
             font-size: 1.5em;
             color: #333;
         }
+        h3 {
+            font-size: 1em;
+            color: rgb(152, 64, 64); 
+            padding-top: 50px; 
+            margin-bottom: 0; 
+            text-wrap: wrap;
+        }
         .genre-list {
             list-style-type: none;
             padding: 0;
@@ -75,6 +82,8 @@
     <div class="home-button">
         <a href="/">Home</a>
     </div>
+    <h3>Joke of the Week: {{joke}}</h3>
+    
 
     {% if role == 'admin' %}
     <!-- Display Regenerate button only for Admin users -->

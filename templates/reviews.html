@@ -145,7 +145,7 @@
     </div>
     
     <!-- submitting a new review -->
-    <form action="/submit_review/{{ genre }}" method="post">
+    <form action="/submit_review/{{ genre }}?role={{ role }}" method="post">
         <label for="review-text">Your Review:</label>
         <textarea id="review-text" name="review" required></textarea>
 
@@ -160,6 +160,6 @@
 
         <button type="submit">Submit Review</button>
     </form>
-    <a class="back-to-home" href="/">Back to Home</a>
+    <a class="back-to-home" href="/home?role={{ role }}">Back to Home</a>
 </body>
 </html>

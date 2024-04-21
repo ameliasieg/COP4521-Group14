@@ -22,24 +22,24 @@ In our original proposal, we were going to create chatrooms. We later decided to
 # Separation of work: 
 All group members equally contributed to the code and database. Between each meeting, every member was assigned a task and completed that task. 
 Everyone:
-•	Cleaning up code 
-•	Debugging 
-•	Visual appeal of website 
-•	Added 10 books to database 
+* Cleaning up code 
+* Debugging 
+* Visual appeal of website 
+* Added 10 books to database 
 Rebecca:
-•	Delete button for moderator 
-•	Displaying book information 
-•	Added 100 books to database
+* Delete button for moderator 
+* Displaying book information 
+* Added 100 books to database
 Madalina:
-•	Original website setup 
-•	Log in page 
-•	Initial review implementation 
-•	Created start page 
+* Original website setup 
+* Log in page 
+* Initial review implementation 
+* Created start page 
 Amelia: 
-•	Original website setup
-•	Selecting random books from database 
-•	Displaying book information 
+* Original website setup
+* Selecting random books from database 
+* Displaying book information 
 Olivia: 
-•	Rating and average rating 
-•	Joke of the week 
-•	Added 100 books to database
+* Rating and average rating 
+* Joke of the week 
+* Added 100 books to database

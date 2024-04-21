@@ -16,11 +16,14 @@
             color: #333;
         }
 
-        .review-header {
-            text-align: center;
-            margin-bottom: 20px;
+        .delete-button {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            float: right;
         }
-
         .review-header h1 {
             font-size: 2em;
             margin-bottom: 0.5em;
@@ -62,7 +65,9 @@
 
         .reviews-container {
             background-color: white;
-
+            display: grid;
+            grid-template-columns: 70% 30%;
+            gap: 10px;
         }
 
         .review-box {
@@ -75,11 +80,35 @@
             border-bottom: none;
         }
 
+        .review-text {
+            margin-bottom: 0.5em;
+        }
+
+        .review-rating {
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+
+        .column-title {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+
+        .column-separator {
+            border-right: 1px solid #ddd;
+            padding-right: 10px;
+        }
+
         .back-to-home {
             display: inline-block;
             margin-top: 20px;
             text-decoration: none;
             font-size: 1em;
+        }
+
+        .average-rating {
+            margin-top: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -88,20 +117,49 @@
         <h1>Reviews for Books in {{ genre | capitalize }}</h1>
     </div>
     <div class="reviews-container">
-        {% for review in reviews %}
-        <div class="review-box">
-            <p>{{ review[0] }}</p>
+        <div class="column-separator">
+            <div class="column-title">Review</div>
+            {% for review in reviews %}
+            <div class="review-box">
+                <p class="review-text">{{ review[0] }}</p>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        <div>
+            <div class="column-title">Rating</div>
+            {% for review in reviews %}
+            <div class="review-box">
+                <p class="review-rating">{{ review[1] }}</p>
+                {% if role == 'moderator' %} <!-- Only show delete button for Moderators -->
+                    <form action="{{ url_for('delete_review', genre=genre, role=role) }}" method="post">
+                        <input type="hidden" name="review_text" value="{{ review[0] }}">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="average-rating">
+                <p>Average Rating: {{ average_rating }}</p>
+            </div>
+        </div>
     </div>
-    <div class="review-form">
-        <h2>Submit a Review</h2>
-        <form action="{{ url_for('submit_review', genre=genre) }}" method="post">
-            <textarea id="review" name="review" required></textarea>
-            <button type="submit">Submit Review</button>
-        </form>
-    </div>
+    
+    <!-- submitting a new review -->
+    <form action="/submit_review/{{ genre }}?role={{ role }}" method="post">
+        <label for="review-text">Your Review:</label>
+        <textarea id="review-text" name="review" required></textarea>
 
-    <a class="back-to-home" href="/">Back to Home</a>
+        <label for="review-rating">Your Rating:</label>
+        <select id="review-rating" name="rating" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <button type="submit">Submit Review</button>
+    </form>
+    <a class="back-to-home" href="/home?role={{ role }}">Back to Home</a>
 </body>
 </html>

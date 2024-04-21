@@ -80,6 +80,7 @@
             text-decoration: none;
             color: blue;
         }
+
       
         .book-list {
             list-style-type: none;
@@ -99,6 +100,7 @@
             border: 1.35px solid rgb(37, 131, 75); 
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for a raised effect */
             transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add transition for smoother hover effect */
+
         }
 
         .home-button:hover {
@@ -109,12 +111,14 @@
     </style>
 </head>
 <body>
+
     <h1>The World of Books!</h1>
     <!-- Home Button -->
     <div class="home-button">
         <a href="/">Back to Start</a>
     </div>
     <h3>Joke of the Week: {{joke}}</h3>
+
 
     {% if role == 'admin' %}
     <!-- Display Regenerate button only for Admin users -->

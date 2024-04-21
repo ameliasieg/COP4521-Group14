@@ -1,9 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import sqlite3
-
 import pyjokes
-
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = '12345'
@@ -45,11 +43,9 @@ def get_random_books_by_genre(genre):
         print("Error fetching random book:", e)
         return None
 
-
 @app.route('/')
 def start():
     return render_template('start.html')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -68,9 +64,7 @@ def login():
 def login_page():
     return render_template('login.html')
 
-
 # Function to display the front page
-
 @app.route('/role', methods=['POST'])
 def role():
     selected_role = request.form.get('role')
@@ -80,8 +74,6 @@ def role():
         return redirect(url_for('home', role='user'))  # Pass role to home.html
     if selected_role == 'moderator':
         return redirect(url_for('home', role='moderator'))
-
-
 
 @app.route('/home')
 def home():
@@ -95,36 +87,6 @@ def home():
         stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
         joke = pyjokes.get_joke()
     return render_template('home.html', books=stored_books, role=role, joke=joke)
-
-
-@app.route('/admin')
-@login_required
-def admin_page():
-    global stored_books
-    if not stored_books:
-        genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']
-        stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
-    return render_template('admin.html', books=stored_books)
-
-@app.route('/regenerate', methods=['POST'])
-@login_required
-def regenerate_books():
-    genres = ['Fantasy', 'Non-Fiction', 'Thriller/Mystery', 'Romance']
-    global stored_books
-    stored_books = {genre: get_random_books_by_genre(genre) for genre in genres}
-    return render_template('home.html', books=stored_books, role='admin')
-
-@app.route('/submit_review/<genre>', methods=['POST'])
-@login_required
-def submit_review(genre):
-    review_text = request.form['review']
-    review_rating = request.form['rating']
-    conn = sqlite3.connect('socialReads.db')
-    cur = conn.cursor()
-    cur.execute("INSERT INTO Reviews (genre, review, rating) VALUES (?, ?, ?)", (genre, review_text, int(review_rating)))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('reviews', genre=genre))
 
 @app.route('/regenerate', methods=['POST'])
 def regenerate_books():
@@ -158,7 +120,6 @@ def submit_review(genre):
         conn.close()
         role = request.args.get('role')
         return redirect(url_for('reviews', genre=genre, role=role))
-
 
 @app.route('/reviews/<genre>')
 def reviews(genre):
@@ -213,11 +174,9 @@ def delete_review(genre):
         role = request.args.get('role')
         return redirect(url_for('reviews', genre=genre, role=role))
 
-
 @app.route('/images/<filename>')
 def send_image(filename):
     return send_from_directory("static/images", filename)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

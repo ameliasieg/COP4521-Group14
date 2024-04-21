@@ -43,4 +43,3 @@ Olivia:
 •	Rating and average rating 
 •	Joke of the week 
 •	Added 100 books to database
-![image](https://github.com/ameliasieg/COP4521-Group14/assets/143987590/f7b59d28-b5c5-4637-8a2b-f7e94fccbea8)

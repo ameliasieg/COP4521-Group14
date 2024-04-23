@@ -1,0 +1,41 @@
+Introduction
+  Playing a pivotal role in the dynamic realm of software deployment, the selection of an ideal containerization platform becomes crucial for the efficient distribution and 
+operation of application programs. This paper details the approach to identify Docker as the most suitable containerizing application for our virtual book club application – a 
+platform designed to elevate the reading experience by generating a random book weekly and providing a social community through book reviews. The deployment strategy we chose 
+promises not only efficient scalability and ease of updates, but also consistent performance across various environments. Subsequently, we describe the deployment process, 
+focusing on the configuration of Docker containers to manage our application components and the steps taken to ensure reliable deployment.
+  The search for an appropriate distribution plan began by deciding the bare minimum of what our application required, and what the users expected. Given the smaller scale of 
+our application, we prioritized a distribution solution that led to simplicity and maintainability, without the need for handling high levels of web traffic or complex, 
+large-scale deployments. The ideal platform would offer straightforward setup and management. Our application deployment would also benefit from cost efficiency, ease of 
+integration, and the ability to maintain performance on limited resources. Given these requirements, Docker seemed like the adequate choice given its lightweight nature and 
+its focus on deploying applications quickly and reliably, regardless of the scale. Docker’s priorities align with our application’s requirements without overcompensating our 
+resource allocation or complicating the user experience. 
+
+Why Docker
+  Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers. Docker is open-source and used by developers 
+to help automate the deployment of applications inside containers. A consistent environment is provided by docker so that the software can run across multiple computing environments. 
+When searching for the best approach for containerizing our Flask-based application, Docker emerges as a valid choice for simplifying the packaging and deployment process into 
+lightweight containers. Its ability to ensure consistency across various environments and its ease of setup and management makes it an attractive option, especially if our 
+deployment requirements are straightforward and simplicity is a priority at this stage of development. It is a user-friendly solution with a shallow learning curve.
+  However, if we think about the deployment of our application in a real-world setting, we must anticipate the potential for high traffic. This would force us to seek something 
+with a bit more advanced capabilities, like Kubernetes. Its automation of deployment, scaling, and management tasks offers features like automatic scaling, load balancing, and 
+service discovery. While Kubernetes offers robust orchestration capabilities, it is typically utilized for large-scale application deployments, such as heavily trafficked websites 
+and cloud computing applications that receive millions of user requests daily. Kubernetes excels in managing complex distributed systems and is well-suited for enterprise-level 
+DevOps environments, particularly in scenarios requiring high-performance computing and extensive scalability. This is unnecessary for what we need for our app at this current 
+moment, so, by choosing Docker, we are opting for a solution that meets our immediate needs while providing a solid foundation for potential future growth.
+	
+Deployment
+  Due to Docker being the smartest choice for deploying our application, we chose to not only containerize our application using Docker, but also to deploy it. Since Docker 
+specializes in containerization, it allows us to package our application along with its environment and dependencies into a container that can be executed on any system supporting 
+Docker. This ensures that our application behaves consistently across all development and production environments. Regarding the development and deployment process, we would begin 
+by creating a Dockerfile, which serves as a blueprint for building a Docker image. This image encapsulates our application code. Once the image is created, we would upload it to 
+a Docker registry such as Docker Hub. We would then run a container from the image on the host machine, and Docker would provide networking capabilities that would allow our 
+containerized application to communicate with external services such as databases. The great thing about Docker is that it is very scalable, so if our application were to grow, 
+Docker can also support our application's horizontal scaling.
+
+Conclusion
+  Overall, our application has enough functionally to act as a virtual book club, however, one of the things that we originally wanted to include in the project, but unfortunately 
+didn't make the cut, was to implement chat rooms. This would allow the user to engage in interactive discussions about the specific books that they were reading that week. Since 
+this is such a small application the idea of a chat room did not make sense at this time so we decided to forego this idea. If this application were to be bigger then in order to 
+implement the chat rooms we would use socket IO, a flask extension, that makes it easy to handle real time communication. Hopefully, we can look back on this application in the 
+near future and add to it any new features to make it more fun for the users.
